@@ -1,5 +1,13 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ProductImageEntity } from './product-image.entity';
+import { CategoryEntity } from 'src/category/entities/category.entity';
+import { BrandEntity } from './../../brand/entities/brand.entity';
 
 @Entity({ name: 'product' })
 export class ProductEntity {
@@ -47,4 +55,10 @@ export class ProductEntity {
 
   @OneToMany(() => ProductImageEntity, (image) => image.product)
   images?: ProductImageEntity[];
+
+  @ManyToOne(() => CategoryEntity, (category) => category.products)
+  category?: CategoryEntity;
+
+  @ManyToOne(() => BrandEntity, (brand) => brand.products)
+  brand: BrandEntity;
 }
